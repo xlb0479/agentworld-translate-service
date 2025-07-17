@@ -25,4 +25,4 @@ async def zhToEn(request: TranslateRequest):
     inputs = app.state.tokenizer([request.zh], return_tensors="pt", padding=True)
     translated = app.state.model.generate(**inputs)
     translated_text = app.state.tokenizer.batch_decode(translated, skip_special_tokens=True)
-    return translated_text[0]
+    return { "en": translated_text[0] }
