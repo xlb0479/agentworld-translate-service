@@ -1,0 +1,16 @@
+services:
+  translate-service:
+    image: translate_service:latest
+    ports:
+      - "8889:8889"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TRANSFORMERS_CACHE=/app/cache
+    volumes:
+      - ./cache:/app/cache  # 缓存模型文件
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8889/docs"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
